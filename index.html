@@ -1,0 +1,1498 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dan Lenzen — Design & Innovation Educator</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=DM+Sans:wght@300;400;500&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #1a1410;
+    --paper: #f5f0e8;
+    --cream: #ede8da;
+    --accent: #c84b1f;
+    --accent2: #2a5c6e;
+    --muted: #7a7060;
+    --rule: #c8bfaa;
+    --white: #ffffff;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 300;
+    line-height: 1.7;
+    overflow-x: hidden;
+  }
+
+  /* ─── NOISE OVERLAY ─── */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 1000;
+    opacity: 0.4;
+  }
+
+  /* ─── NAV ─── */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1.2rem 3rem;
+    background: rgba(245, 240, 232, 0.92);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .nav-logo {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.75rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--accent2);
+  }
+
+  .nav-links {
+    display: flex;
+    gap: 2.5rem;
+    list-style: none;
+  }
+
+  .nav-links a {
+    text-decoration: none;
+    font-size: 0.78rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--muted);
+    transition: color 0.2s;
+  }
+
+  .nav-links a:hover { color: var(--accent); }
+
+  /* ─── HERO ─── */
+  .hero {
+    min-height: 100vh;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-items: end;
+    padding: 0 3rem 5rem;
+    padding-top: 8rem;
+    gap: 4rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero::after {
+    content: '';
+    position: absolute;
+    right: -10%;
+    top: 10%;
+    width: 55vw;
+    height: 55vw;
+    border-radius: 50%;
+    border: 1px solid var(--rule);
+    pointer-events: none;
+  }
+
+  .hero-left {
+    z-index: 1;
+  }
+
+  .hero-eyebrow {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.72rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+  }
+
+  .hero-eyebrow::before {
+    content: '';
+    display: inline-block;
+    width: 2rem;
+    height: 1px;
+    background: var(--accent);
+  }
+
+  h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(3.5rem, 7vw, 7rem);
+    line-height: 0.95;
+    font-weight: 900;
+    letter-spacing: -0.02em;
+    margin-bottom: 2rem;
+  }
+
+  h1 em {
+    font-style: italic;
+    color: var(--accent2);
+  }
+
+  .hero-desc {
+    font-size: 1.05rem;
+    color: var(--muted);
+    max-width: 42ch;
+    line-height: 1.8;
+    margin-bottom: 3rem;
+  }
+
+  .hero-right {
+    z-index: 1;
+    align-self: center;
+    padding-top: 4rem;
+  }
+
+  .stat-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0;
+    border: 1px solid var(--rule);
+  }
+
+  .stat-cell {
+    padding: 2rem;
+    border-right: 1px solid var(--rule);
+    border-bottom: 1px solid var(--rule);
+    position: relative;
+  }
+
+  .stat-cell:nth-child(even) { border-right: none; }
+  .stat-cell:nth-last-child(-n+2) { border-bottom: none; }
+
+  .stat-number {
+    font-family: 'Playfair Display', serif;
+    font-size: 3.5rem;
+    font-weight: 900;
+    line-height: 1;
+    color: var(--ink);
+    margin-bottom: 0.3rem;
+  }
+
+  .stat-label {
+    font-size: 0.75rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  /* ─── MARQUEE ─── */
+  .marquee-wrap {
+    border-top: 1px solid var(--rule);
+    border-bottom: 1px solid var(--rule);
+    overflow: hidden;
+    padding: 1.1rem 0;
+    background: var(--accent2);
+  }
+
+  .marquee-track {
+    display: flex;
+    gap: 0;
+    animation: marquee 28s linear infinite;
+    width: max-content;
+  }
+
+  .marquee-item {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.7rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.7);
+    padding: 0 3rem;
+    white-space: nowrap;
+    display: flex;
+    align-items: center;
+    gap: 3rem;
+  }
+
+  .marquee-item::after {
+    content: '◆';
+    font-size: 0.4rem;
+    color: var(--accent);
+  }
+
+  @keyframes marquee {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+  }
+
+  /* ─── SECTION BASE ─── */
+  section {
+    padding: 7rem 3rem;
+  }
+
+  .section-header {
+    display: flex;
+    align-items: flex-start;
+    gap: 2rem;
+    margin-bottom: 4rem;
+  }
+
+  .section-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.68rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--accent);
+    writing-mode: vertical-rl;
+    transform: rotate(180deg);
+    margin-top: 0.4rem;
+    flex-shrink: 0;
+  }
+
+  h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2.2rem, 4vw, 4rem);
+    line-height: 1.05;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+  }
+
+  h2 em { font-style: italic; color: var(--accent2); }
+
+  /* ─── ABOUT ─── */
+  .about {
+    background: var(--ink);
+    color: var(--paper);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .about::before {
+    content: '"';
+    position: absolute;
+    font-family: 'Playfair Display', serif;
+    font-size: 40rem;
+    line-height: 0.7;
+    right: -2rem;
+    top: -2rem;
+    color: rgba(255,255,255,0.03);
+    pointer-events: none;
+  }
+
+  .about .section-label { color: var(--accent); }
+
+  .about-grid {
+    display: grid;
+    grid-template-columns: 1fr 1.4fr;
+    gap: 6rem;
+    align-items: start;
+  }
+
+  .about-bio {
+    font-size: 1.05rem;
+    line-height: 1.85;
+    color: rgba(245,240,232,0.8);
+  }
+
+  .about-bio p + p { margin-top: 1.2rem; }
+
+  .about-bio strong { color: var(--paper); font-weight: 500; }
+
+  .timeline {
+    position: relative;
+  }
+
+  .timeline::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0.5rem;
+    bottom: 0;
+    width: 1px;
+    background: rgba(255,255,255,0.15);
+  }
+
+  .timeline-item {
+    padding-left: 2rem;
+    padding-bottom: 2.5rem;
+    position: relative;
+  }
+
+  .timeline-item::before {
+    content: '';
+    position: absolute;
+    left: -3px;
+    top: 0.5rem;
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: var(--accent);
+  }
+
+  .timeline-year {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.7rem;
+    letter-spacing: 0.15em;
+    color: var(--accent);
+    margin-bottom: 0.3rem;
+  }
+
+  .timeline-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--paper);
+    margin-bottom: 0.3rem;
+  }
+
+  .timeline-desc {
+    font-size: 0.85rem;
+    color: rgba(245,240,232,0.55);
+    line-height: 1.6;
+  }
+
+  /* ─── PROGRAM ─── */
+  .program-intro {
+    display: grid;
+    grid-template-columns: 1.2fr 1fr;
+    gap: 6rem;
+    align-items: center;
+    margin-bottom: 5rem;
+  }
+
+  .program-body {
+    font-size: 1.05rem;
+    line-height: 1.85;
+    color: var(--muted);
+  }
+
+  .program-body p + p { margin-top: 1.2rem; }
+
+  .program-body strong { color: var(--ink); }
+
+  .callout {
+    background: var(--cream);
+    border-left: 3px solid var(--accent);
+    padding: 2rem 2.5rem;
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-size: 1.25rem;
+    line-height: 1.6;
+    color: var(--ink);
+  }
+
+  .pillars {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0;
+    border: 1px solid var(--rule);
+    margin-top: 3rem;
+  }
+
+  .pillar {
+    padding: 2.5rem;
+    border-right: 1px solid var(--rule);
+    position: relative;
+    transition: background 0.25s;
+  }
+
+  .pillar:last-child { border-right: none; }
+  .pillar:hover { background: var(--cream); }
+
+  .pillar-num {
+    font-family: 'Playfair Display', serif;
+    font-size: 3rem;
+    font-weight: 900;
+    color: var(--rule);
+    line-height: 1;
+    margin-bottom: 1rem;
+  }
+
+  .pillar-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.1rem;
+    font-weight: 700;
+    margin-bottom: 0.7rem;
+  }
+
+  .pillar-desc {
+    font-size: 0.85rem;
+    line-height: 1.7;
+    color: var(--muted);
+  }
+
+  /* ─── PROJECTS ─── */
+  .projects { background: var(--cream); }
+
+  .projects-grid {
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    gap: 1.5rem;
+  }
+
+  .proj-card {
+    background: var(--white);
+    padding: 2.5rem;
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    cursor: default;
+  }
+
+  .proj-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 20px 60px rgba(26,20,16,0.12);
+  }
+
+  .proj-card.wide { grid-column: span 8; }
+  .proj-card.narrow { grid-column: span 4; }
+  .proj-card.half { grid-column: span 6; }
+  .proj-card.full { grid-column: span 12; }
+
+  .proj-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    background: var(--accent);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.3s ease;
+  }
+
+  .proj-card:hover::before { transform: scaleX(1); }
+
+  .proj-tag {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--accent2);
+    margin-bottom: 1.2rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .proj-tag span {
+    background: rgba(42,92,110,0.1);
+    padding: 0.2rem 0.5rem;
+    border-radius: 2px;
+  }
+
+  .proj-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.6rem;
+    font-weight: 700;
+    line-height: 1.15;
+    margin-bottom: 0.8rem;
+  }
+
+  .proj-subtitle {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.7rem;
+    color: var(--accent);
+    letter-spacing: 0.1em;
+    margin-bottom: 0.8rem;
+  }
+
+  .proj-desc {
+    font-size: 0.9rem;
+    line-height: 1.75;
+    color: var(--muted);
+  }
+
+  .proj-tags {
+    margin-top: 1.5rem;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+  }
+
+  .proj-tag-pill {
+    font-size: 0.68rem;
+    letter-spacing: 0.08em;
+    padding: 0.25rem 0.7rem;
+    border: 1px solid var(--rule);
+    color: var(--muted);
+    text-transform: uppercase;
+    border-radius: 1px;
+  }
+
+  .proj-img {
+    width: 100%;
+    aspect-ratio: 16/9;
+    object-fit: cover;
+    display: block;
+    margin-bottom: 1.8rem;
+    border-radius: 0;
+    filter: saturate(0.9);
+    transition: filter 0.3s;
+  }
+
+  .proj-card:hover .proj-img { filter: saturate(1.05); }
+
+  .proj-img-tall {
+    width: 100%;
+    aspect-ratio: 4/3;
+    object-fit: cover;
+    display: block;
+    margin-bottom: 1.8rem;
+    filter: saturate(0.9);
+    transition: filter 0.3s;
+  }
+
+  .proj-card:hover .proj-img-tall { filter: saturate(1.05); }
+
+  .proj-img-strip {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3px;
+    margin-bottom: 1.8rem;
+  }
+
+  .proj-img-strip img {
+    width: 100%;
+    aspect-ratio: 4/3;
+    object-fit: cover;
+    display: block;
+    filter: saturate(0.9);
+    transition: filter 0.3s;
+  }
+
+  .proj-card:hover .proj-img-strip img { filter: saturate(1.05); }
+
+  .proj-highlight {
+    margin-top: 1.5rem;
+    padding: 1rem 1.2rem;
+    background: rgba(200, 75, 31, 0.06);
+    border-left: 2px solid var(--accent);
+    font-size: 0.82rem;
+    color: var(--ink);
+    font-style: italic;
+  }
+
+  /* ─── COURSES ─── */
+  .courses-list {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0;
+    border: 1px solid var(--rule);
+    margin-top: 1rem;
+  }
+
+  .course-item {
+    padding: 2rem 2.5rem;
+    border-right: 1px solid var(--rule);
+    border-bottom: 1px solid var(--rule);
+    transition: background 0.2s;
+  }
+
+  .course-item:hover { background: var(--cream); }
+  .course-item:nth-child(even) { border-right: none; }
+  .course-item:last-child { border-bottom: none; }
+  .course-item:nth-last-child(2) { border-bottom: none; }
+
+  .course-level {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 0.5rem;
+  }
+
+  .course-name {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.1rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+  }
+
+  .course-desc {
+    font-size: 0.83rem;
+    line-height: 1.65;
+    color: var(--muted);
+  }
+
+  /* ─── RESEARCH ─── */
+  .research { background: var(--ink); color: var(--paper); }
+  .research .section-label { color: var(--accent); }
+  .research h2 em { color: rgba(245,240,232,0.5); }
+
+  .pubs-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    margin-top: 1rem;
+    border-top: 1px solid rgba(255,255,255,0.1);
+  }
+
+  .pub-item {
+    padding: 1.8rem 0;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 2rem;
+    align-items: start;
+  }
+
+  .pub-year {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.72rem;
+    letter-spacing: 0.1em;
+    color: var(--accent);
+    padding-top: 0.2rem;
+    white-space: nowrap;
+  }
+
+  .pub-title {
+    font-size: 0.92rem;
+    color: rgba(245,240,232,0.85);
+    line-height: 1.6;
+    margin-bottom: 0.3rem;
+  }
+
+  .pub-venue {
+    font-size: 0.78rem;
+    color: rgba(245,240,232,0.4);
+    font-style: italic;
+  }
+
+  /* ─── RECOGNITION ─── */
+  .recognition-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+    margin-top: 1rem;
+  }
+
+  .award-card {
+    padding: 2.5rem;
+    background: var(--cream);
+    border: 1px solid var(--rule);
+    position: relative;
+    transition: border-color 0.2s;
+  }
+
+  .award-card:hover { border-color: var(--accent); }
+
+  .award-icon {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+  }
+
+  .award-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.05rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+  }
+
+  .award-desc {
+    font-size: 0.82rem;
+    line-height: 1.65;
+    color: var(--muted);
+  }
+
+  /* ─── CONTACT ─── */
+  .contact {
+    background: var(--accent2);
+    color: var(--paper);
+    text-align: center;
+    padding: 7rem 3rem;
+  }
+
+  .contact h2 {
+    font-size: clamp(2.5rem, 5vw, 5rem);
+    color: var(--paper);
+  }
+
+  .contact h2 em { color: rgba(245,240,232,0.4); }
+
+  .contact-desc {
+    font-size: 1rem;
+    color: rgba(245,240,232,0.65);
+    margin: 1.5rem auto 3rem;
+    max-width: 45ch;
+    line-height: 1.8;
+  }
+
+  .contact-links {
+    display: flex;
+    gap: 1.5rem;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  .contact-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    padding: 0.9rem 2.2rem;
+    font-family: 'DM Mono', monospace;
+    font-size: 0.78rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    text-decoration: none;
+    transition: all 0.25s;
+  }
+
+  .contact-link.primary {
+    background: var(--paper);
+    color: var(--accent2);
+  }
+
+  .contact-link.primary:hover {
+    background: var(--accent);
+    color: var(--white);
+  }
+
+  .contact-link.secondary {
+    border: 1px solid rgba(245,240,232,0.4);
+    color: var(--paper);
+  }
+
+  .contact-link.secondary:hover {
+    border-color: var(--paper);
+    background: rgba(245,240,232,0.1);
+  }
+
+  /* ─── FOOTER ─── */
+  footer {
+    background: var(--ink);
+    color: rgba(245,240,232,0.3);
+    padding: 2rem 3rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.72rem;
+    letter-spacing: 0.08em;
+    font-family: 'DM Mono', monospace;
+  }
+
+  /* ─── SCROLL ANIMATIONS ─── */
+  .reveal {
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+
+  .reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .reveal-delay-1 { transition-delay: 0.1s; }
+  .reveal-delay-2 { transition-delay: 0.2s; }
+  .reveal-delay-3 { transition-delay: 0.3s; }
+  .reveal-delay-4 { transition-delay: 0.4s; }
+
+  /* ─── RESPONSIVE ─── */
+  @media (max-width: 900px) {
+    nav { padding: 1rem 1.5rem; }
+    .nav-links { gap: 1.5rem; }
+    .hero { grid-template-columns: 1fr; padding: 6rem 1.5rem 4rem; }
+    .hero::after { display: none; }
+    section { padding: 5rem 1.5rem; }
+    .about-grid, .program-intro { grid-template-columns: 1fr; gap: 3rem; }
+    .pillars { grid-template-columns: 1fr; }
+    .pillar { border-right: none; border-bottom: 1px solid var(--rule); }
+    .pillar:last-child { border-bottom: none; }
+    .proj-card.wide, .proj-card.narrow, .proj-card.half { grid-column: span 12; }
+    .courses-list { grid-template-columns: 1fr; }
+    .course-item { border-right: none; }
+    .course-item:nth-last-child(2) { border-bottom: 1px solid var(--rule); }
+    .recognition-grid { grid-template-columns: 1fr; }
+    footer { flex-direction: column; gap: 0.5rem; text-align: center; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">Dan Lenzen</div>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#program">Program</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#hub" style="color: var(--accent);">The Hub</a></li>
+    <li><a href="#courses">Courses</a></li>
+    <li><a href="#research">Research</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-left">
+    <div class="hero-eyebrow">Director of Design &amp; Innovation</div>
+    <h1>Building <em>Design &amp; Innovation </em> Education</h1>
+    <p class="hero-desc">
+      La Jolla Country Day School · San Diego, CA<br>
+      Connecting K–12 students with human-centered design, real-world industry partners, and the tools to shape what comes next.
+    </p>
+  </div>
+  <div class="hero-right">
+    <div class="stat-grid reveal">
+      <div class="stat-cell">
+        <div class="stat-number">10+</div>
+        <div class="stat-label">Years building the program</div>
+      </div>
+      <div class="stat-cell">
+        <div class="stat-number">115</div>
+        <div class="stat-label">Upper school students per year</div>
+      </div>
+      <div class="stat-cell">
+        <div class="stat-number">75%</div>
+        <div class="stat-label">Of student body served</div>
+      </div>
+      <div class="stat-cell">
+        <div class="stat-number">K–12</div>
+        <div class="stat-label">Full-school design & innovation curriculum</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MARQUEE -->
+<div class="marquee-wrap">
+  <div class="marquee-track">
+    <div class="marquee-item">Human-Centered Design</div>
+    <div class="marquee-item">CamelBak Partnership</div>
+    <div class="marquee-item">Ottobock Prosthetics</div>
+    <div class="marquee-item">La Jolla Institute for Immunology</div>
+    <div class="marquee-item">WGN-TV Featured</div>
+    <div class="marquee-item">Smithsonian / Cooper Hewitt Finalist</div>
+    <div class="marquee-item">Int'l Housewares Show Chicago</div>
+    <div class="marquee-item">D4SD Competition Finalist</div>
+    <div class="marquee-item">Ethnographic Research</div>
+    <div class="marquee-item">Hub for Human Impact · Opening 2026</div>
+    <div class="marquee-item">Design Thinking</div>
+    <div class="marquee-item">Human-Centered Design</div>
+    <div class="marquee-item">CamelBak Partnership</div>
+    <div class="marquee-item">Ottobock Prosthetics</div>
+    <div class="marquee-item">La Jolla Institute for Immunology</div>
+    <div class="marquee-item">WGN-TV Featured</div>
+    <div class="marquare-item">Smithsonian / Cooper Hewitt Finalist</div>
+    <div class="marquee-item">Int'l Housewares Show Chicago</div>
+    <div class="marquee-item">D4SD Competition Finalist</div>
+    <div class="marquee-item">Ethnographic Research</div>
+    <div class="marquee-item">Hub for Human Impact · Opening 2026</div>
+    <div class="marquee-item">Design Thinking</div>
+  </div>
+</div>
+
+<!-- ABOUT -->
+<section class="about" id="about">
+  <div class="section-header">
+    <span class="section-label">Background</span>
+    <h2><em>Cognitive scientist.</em> Educator. <em>Designer.</em></h2>
+  </div>
+  <div class="about-grid">
+    <div class="about-bio reveal">
+      <p>Dan Lenzen is the Director of Design &amp; Innovation at La Jolla Country Day School, where he built one of the most recognized K–12 design and innovation programs in the country from a near-empty room with bare white walls.</p>
+      <p>He earned his <strong>M.S. in Cognitive Science at UC San Diego</strong>, where he designed tools using the Microsoft Kinect to study gesture and sign language — and taught human-centered design to undergraduates. Before that, he spent three years as a researcher at the <strong>University of Chicago</strong> investigating the role of gesture in middle school math learning.</p>
+      <p>That rare blend — human psychology, research methods, programming, and design — has driven his ability to build an academic program that reaches far beyond traditional STEM, teaching students to identify not just how to solve problems, but <strong>which problems are worth solving</strong>.</p>
+      <p>A native Chicagoan, he has embraced the San Diego lifestyle: surfing, hiking, and genuinely enjoying every month of the year.</p>
+    </div>
+    <div class="timeline reveal reveal-delay-2">
+      <div class="timeline-item">
+        <div class="timeline-year">2015 – Present</div>
+        <div class="timeline-title">Director, Design &amp; Innovation — LJCDS</div>
+        <div class="timeline-desc">Built a world-class K–12 innovation program serving 75% of the student body with a full-time staff of seven across five dedicated spaces.</div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-year">2012 – 2015</div>
+        <div class="timeline-title">M.S. Cognitive Science — UC San Diego</div>
+        <div class="timeline-desc">Designed software &amp; processes to study gesture and sign language using the Microsoft Kinect. Taught human-centered design to undergraduates. UCSD Chancellor's Interdisciplinary Collaboratories Award ($15,000).</div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-year">2009 – 2012</div>
+        <div class="timeline-title">Research Assistant — University of Chicago</div>
+        <div class="timeline-desc">Investigated the role of gesture in learning for middle school students. Co-authored peer-reviewed publications in Cognition journal.</div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-year">2005 – 2009</div>
+        <div class="timeline-title">B.A. Psychology — Colorado College</div>
+        <div class="timeline-desc">Focus on social psychology. Conducted independent and collaborative research; served as learning assistant and student researcher.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROGRAM -->
+<section id="program">
+  <div class="section-header">
+    <span class="section-label">Program</span>
+    <h2>LJCDS <em>Design &amp; Innovation</em></h2>
+  </div>
+  <div class="program-intro">
+    <div class="program-body reveal">
+      <p>When Dan arrived at LJCDS, the Innovation Lab was a mostly empty room. Today it is a nationally recognized program with five dedicated spaces, a staff of seven industry veterans, and a curriculum spanning early childhood through Grade 12.</p>
+      <p>The program is grounded in the belief that <strong>innovation and human-centered design should be a core component of education</strong> — not an elective add-on. Students don't just learn to make things; they learn to determine which things are worth making.</p>
+      <p>Real-world industry partnerships are central to the model. Classes have worked with <strong>CamelBak, Ottobock, Rady Children's Hospital, the Challenged Athletes Foundation, the La Jolla Institute for Immunology, and The Design Lab at UCSD</strong>, among others. Alumni have gone on to Fortune 500 companies, nonprofits, and businesses of their own.</p>
+    </div>
+    <div class="callout reveal reveal-delay-2">
+      "We believe that a 21st-century education must prepare students for the world they will enter. People will not be judged solely on technical abilities, but on curiosity, creativity, and execution."
+    </div>
+  </div>
+  <div class="pillars">
+    <div class="pillar reveal">
+      <div class="pillar-num">01</div>
+      <div class="pillar-title">Human Lens</div>
+      <div class="pillar-desc">Ethnographic research in context. Students observe and interview real users in their environments to find non-obvious insights — the drivers and motivators behind human behavior.</div>
+    </div>
+    <div class="pillar reveal reveal-delay-1">
+      <div class="pillar-num">02</div>
+      <div class="pillar-title">Technical Lens</div>
+      <div class="pillar-desc">Feasibility matters. Students learn to prototype, iterate, and build — with laser cutters, 3D printers, sensors, electronics, code, and a student-built CNC milling machine.</div>
+    </div>
+    <div class="pillar reveal reveal-delay-2">
+      <div class="pillar-num">03</div>
+      <div class="pillar-title">Business Lens</div>
+      <div class="pillar-desc">Ideas must be adopted to matter. Culminating experiences include business plans, provisional patent filings with the USPTO, and pitching to the student-run Torrey Explorers' Fund.</div>
+    </div>
+  </div>
+</section>
+
+<!-- PROJECTS -->
+<section class="projects" id="projects">
+  <div class="section-header">
+    <span class="section-label">Projects</span>
+    <h2>Student work that <em>shipped</em>.</h2>
+  </div>
+  <div class="projects-grid">
+
+    <!-- Sunflower -->
+    <div class="proj-card full reveal" style="background: var(--ink); color: var(--paper); border-top: 3px solid var(--accent); padding-bottom: 2.5rem;">
+      <img src="https://bbk12e1-cdn.myschoolcdn.com/ftpimages/737/news/large_news1660598_1725681.jpeg" alt="Sunflower — Dan Lenzen and Matthew DuBois in Vietnam" style="width:100%; height:320px; object-fit:cover; display:block; margin-bottom:2rem; filter:brightness(0.85) saturate(0.9);">
+      <div style="display:grid; grid-template-columns: 1.2fr 1fr; gap: 4rem; align-items: start; padding: 0 2.5rem 0;">
+        <div>
+          <div class="proj-tag" style="color: rgba(245,240,232,0.5);">
+            <span style="background: rgba(200,75,31,0.25); color: var(--accent);">2024–25</span>
+            Featured Student Venture · CES Eureka Park
+          </div>
+          <div class="proj-title" style="font-size: 2.2rem; color: var(--paper);">Sunflower</div>
+          <div class="proj-subtitle">AI-Powered Indoor Air Quality Sensor · Matthew DuBois '26</div>
+          <div class="proj-desc" style="color: rgba(245,240,232,0.7); margin-top: 1rem; font-size: 0.95rem;">
+            Matthew DuBois '26 identified a gap hiding in plain sight: most indoor air quality sensors look and feel like scientific instruments — dense with raw data, stripped of design, leaving users with no real understanding of what the readings mean. His answer was <strong style="color: var(--paper);">Sunflower</strong>: a compact, beautifully designed air quality monitor that uses AI to translate CO₂, VOC, humidity, and particulate data into clear, actionable guidance — something you'd be glad to leave in your living room, office, or child's bedroom.
+          </div>
+          <div class="proj-desc" style="color: rgba(245,240,232,0.7); margin-top: 1rem; font-size: 0.95rem;">
+            After earning early backing from the <strong style="color: var(--paper);">Torrey Explorers Fund</strong> and the <strong style="color: var(--paper);">Reifschneider Endowed Award</strong>, Matthew built a functioning product over the summer — teaching himself advanced electronics using ChatGPT and YouTube alongside his Design &amp; Innovation coursework. A Friends &amp; Family funding round followed, attracting not just capital but mentorship from investors who called him the most organized, detailed, and informed founder they'd ever backed.
+          </div>
+          <div class="proj-highlight" style="background: rgba(200,75,31,0.15); border-left-color: var(--accent); color: var(--paper); margin-top: 1.5rem;">
+            "There's something about the face-to-face collaboration. We got more done sitting in the conference room for an hour than we had in all the hours of talking on the phone and in emails." — Matthew DuBois '26
+          </div>
+        </div>
+        <div>
+          <div style="background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.1); padding: 0; margin-bottom: 1.5rem; overflow:hidden;">
+            <img src="https://bbk12e1-cdn.myschoolcdn.com/ftpimages/737/misc/misc_294069.png" alt="Cicor factory visit, Vietnam" style="width:100%; height:180px; object-fit:cover; display:block; filter:brightness(0.8);">
+            <div style="padding: 1.5rem;">
+            <div style="font-family: 'DM Mono', monospace; font-size: 0.65rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--accent); margin-bottom: 1rem;">8,300 Miles · Ho Chi Minh City, Vietnam</div>
+            <div style="font-family: 'Playfair Display', serif; font-size: 1.05rem; color: var(--paper); margin-bottom: 0.8rem; font-weight: 700;">Factory Visit to Cicor Vietnam</div>
+            <div style="font-size: 0.83rem; color: rgba(245,240,232,0.6); line-height: 1.7;">Dan, Matthew, and Head of School Dr. Jeff Terwin traveled 8,300 miles to Ho Chi Minh City to meet with <strong style="color: rgba(245,240,232,0.85);">Cicor</strong>, a Swiss-owned international electronics manufacturer, to bring Sunflower into production. Cicor averages 64% renewable energy from rooftop solar — verified in real time on the factory floor. Challenges that would have been impossible to solve remotely — rerouting a misplaced shipment, refining circuit board placements — were resolved in a single in-person session.</div>
+            </div>
+          </div>
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: rgba(255,255,255,0.1);">
+            <div style="background: var(--ink); padding: 1.2rem; text-align: center;">
+              <div style="font-family: 'Playfair Display', serif; font-size: 2rem; font-weight: 900; color: var(--paper);">CES</div>
+              <div style="font-size: 0.68rem; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(245,240,232,0.4); margin-top: 0.2rem;">Eureka Park · Las Vegas</div>
+            </div>
+            <div style="background: var(--ink); padding: 1.2rem; text-align: center;">
+              <div style="font-family: 'Playfair Display', serif; font-size: 2rem; font-weight: 900; color: var(--accent);">TEF</div>
+              <div style="font-size: 0.68rem; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(245,240,232,0.4); margin-top: 0.2rem;">Torrey Explorers Funded</div>
+            </div>
+            <div style="background: var(--ink); padding: 1.2rem; text-align: center;">
+              <div style="font-family: 'Playfair Display', serif; font-size: 2rem; font-weight: 900; color: var(--paper);">AI</div>
+              <div style="font-size: 0.68rem; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(245,240,232,0.4); margin-top: 0.2rem;">Data → Insights</div>
+            </div>
+            <div style="background: var(--ink); padding: 1.2rem; text-align: center;">
+              <div style="font-family: 'Playfair Display', serif; font-size: 2rem; font-weight: 900; color: var(--paper);">'26</div>
+              <div style="font-size: 0.68rem; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(245,240,232,0.4); margin-top: 0.2rem;">Current student founder</div>
+            </div>
+          </div>
+          <div class="proj-tags" style="margin-top: 1.5rem;">
+            <span class="proj-tag-pill" style="border-color: rgba(255,255,255,0.2); color: rgba(245,240,232,0.5);">Air Quality</span>
+            <span class="proj-tag-pill" style="border-color: rgba(255,255,255,0.2); color: rgba(245,240,232,0.5);">Electronics</span>
+            <span class="proj-tag-pill" style="border-color: rgba(255,255,255,0.2); color: rgba(245,240,232,0.5);">AI</span>
+            <span class="proj-tag-pill" style="border-color: rgba(255,255,255,0.2); color: rgba(245,240,232,0.5);">VC Funded</span>
+            <span class="proj-tag-pill" style="border-color: rgba(255,255,255,0.2); color: rgba(245,240,232,0.5);">Manufacturing</span>
+            <span class="proj-tag-pill" style="border-color: rgba(255,255,255,0.2); color: rgba(245,240,232,0.5);">Patent</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- CheckPoint Student -->
+    <div class="proj-card wide reveal">
+      <img src="https://framerusercontent.com/images/dRpdZB5t90M65N8FjN0XNk0nWQ.png" alt="CheckPoint Student — Emergency Rapid Response Mode dashboard" class="proj-img" style="aspect-ratio:16/7;">
+      <div class="proj-tag"><span>2024</span> Congressional App Challenge Winner</div>
+      <div class="proj-title">CheckPoint Student</div>
+      <div class="proj-subtitle">NFC Attendance Platform · Matthew DuBois '26 &amp; Luke Graham · ckpnt.com</div>
+      <div class="proj-desc">Matthew and his co-founder Luke Graham spotted a friction point hiding in plain sight: during free periods at LJCDS, students had to drop everything, walk across campus, and write their name on a clipboard to confirm attendance. Their answer was <strong>CheckPoint Student</strong> — a campus presence system that lets students tap their phone to any CheckPoint node using NFC, the same technology behind contactless payments. Nodes are 5mm thin, require no power and no internet, and can be deployed anywhere on campus instantly. An Emergency Rapid Response Mode enables staff to account for every student's location during a crisis. The Manager dashboard gives attendance staff a single place to view data across all checkpoints, track audit logs, and monitor configurations — designed in close collaboration with LJCDS attendance staff who were treated as primary end-users throughout development.</div>
+      <div class="proj-desc" style="margin-top: 0.8rem;">All processing happens on-device — sensitive data is never exchanged with a CheckPoint node. Every interaction is secured by a dynamically calculated encryption key. The product is live at ckpnt.com, patent pending.</div>
+      <div class="proj-tags">
+        <span class="proj-tag-pill">NFC</span>
+        <span class="proj-tag-pill">iOS App</span>
+        <span class="proj-tag-pill">Security</span>
+        <span class="proj-tag-pill">Patent Pending</span>
+        <span class="proj-tag-pill">Congressional Winner</span>
+      </div>
+      <div class="proj-highlight">Winner, 2024 Congressional App Challenge — California's 50th District (Rep. Scott Peters). Invited to showcase at the annual #HouseOfCode festival at the U.S. Capitol. One of 3,881 apps submitted by 12,682 students nationally.</div>
+    </div>
+
+    <div class="proj-card narrow reveal reveal-delay-1" style="background: var(--accent2); color: var(--paper);">
+      <div style="font-family: 'DM Mono', monospace; font-size: 0.65rem; letter-spacing: 0.15em; text-transform: uppercase; color: rgba(245,240,232,0.5); margin-bottom: 1.5rem;">2024 Congressional App Chalenge by the numbers</div>
+      <div style="margin-bottom: 2rem;">
+        <div style="font-family: 'Playfair Display', serif; font-size: 3rem; font-weight: 900; line-height: 1; color: var(--paper);">12,682</div>
+        <div style="font-size: 0.75rem; letter-spacing: 0.08em; text-transform: uppercase; color: rgba(245,240,232,0.5); margin-top: 0.3rem;">Students competing nationally</div>
+      </div>
+      <div style="margin-bottom: 2rem;">
+        <div style="font-family: 'Playfair Display', serif; font-size: 3rem; font-weight: 900; line-height: 1; color: var(--paper);">382</div>
+        <div style="font-size: 0.75rem; letter-spacing: 0.08em; text-transform: uppercase; color: rgba(245,240,232,0.5); margin-top: 0.3rem;">Members of Congress hosting — a record high</div>
+      </div>
+      <div>
+        <div style="font-family: 'Playfair Display', serif; font-size: 3rem; font-weight: 900; line-height: 1; color: var(--accent);">#1</div>
+        <div style="font-size: 0.75rem; letter-spacing: 0.08em; text-transform: uppercase; color: rgba(245,240,232,0.5); margin-top: 0.3rem;">CA-50 District Winner</div>
+      </div>
+    </div>
+
+    <!-- High-Altitude Balloon -->
+    <div class="proj-card narrow reveal" style="background: #0d1f2d; color: var(--paper); display: flex; flex-direction: column; justify-content: space-between; padding: 0; overflow: hidden;">
+      <img src="https://images.squarespace-cdn.com/content/v1/68bb24ef5f3a792374876785/1757095177269-00QJ4I0EMKJ1O8LXUY6L/_03A9017.jpg" alt="Third graders launch the high-altitude balloon" style="width:100%; height:220px; object-fit:cover; display:block; filter:brightness(0.8) saturate(0.85);">
+      <div style="padding: 2.5rem; flex: 1; display: flex; flex-direction: column; justify-content: space-between;">
+      <div>
+        <div class="proj-tag" style="color: rgba(245,240,232,0.45);"><span style="background: rgba(255,255,255,0.1); color: #7ec8e3;">3rd Grade + Upper School</span> Interdisciplinary Launch</div>
+        <div class="proj-title" style="color: var(--paper); font-size: 1.9rem; margin-top: 0.5rem;">High-Altitude<br>Balloon</div>
+        <div class="proj-subtitle" style="color: #7ec8e3;">100,000 ft max altitude · 50+ miles traveled · Julian, CA landing site</div>
+      </div>
+      <div style="margin: 1.5rem 0; padding: 1.2rem; background: rgba(255,255,255,0.05); border-left: 2px solid #7ec8e3;">
+        <div style="font-family: 'Playfair Display', serif; font-style: italic; font-size: 0.9rem; color: rgba(245,240,232,0.8); line-height: 1.6;">"Holding a marshmallow that had been to space and understanding why it changed after flight inspired me by what we had learned and accomplished in class!"</div>
+        <div style="font-size: 0.68rem; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(245,240,232,0.35); margin-top: 0.6rem;">— Truman May, Grade 3</div>
+      </div>
+      <div class="proj-tags">
+        <span class="proj-tag-pill" style="border-color: rgba(255,255,255,0.15); color: rgba(245,240,232,0.45);">Science</span>
+        <span class="proj-tag-pill" style="border-color: rgba(255,255,255,0.15); color: rgba(245,240,232,0.45);">Engineering</span>
+        <span class="proj-tag-pill" style="border-color: rgba(255,255,255,0.15); color: rgba(245,240,232,0.45);">K–12 Collab</span>
+        <span class="proj-tag-pill" style="border-color: rgba(255,255,255,0.15); color: rgba(245,240,232,0.45);">Data Science</span>
+      </div>
+      </div>
+    </div>
+
+    <div class="proj-card wide reveal reveal-delay-1">
+      <div class="proj-img-strip">
+        <img src="https://images.squarespace-cdn.com/content/v1/68bb24ef5f3a792374876785/1757095177275-U1CSWMU9Y982QVK065TO/_03A8803.jpg" alt="Third graders with balloon payload">
+        <img src="https://images.squarespace-cdn.com/content/v1/68bb24ef5f3a792374876785/1757095177280-1XZ5V6KY17KVY1RLSBWA/_03A9134.jpg" alt="Students reviewing GPS data">
+      </div>
+      <div class="proj-tag"><span>2024–25</span> K–12 Interdisciplinary · Lower + Upper School</div>
+      <div class="proj-title">3rd Graders Launch a Balloon to the Stratosphere</div>
+      <div class="proj-subtitle">High-Altitude Balloon Project with Blue Dot Education</div>
+      <div class="proj-desc">It started in the third-grade Design &amp; Innovation class, where 8-year-olds designed parachutes, planned experiments, and decided what questions they wanted to ask the atmosphere: How do marshmallows change under low air pressure? What happens to temperature at 100,000 feet? On launch day, they released a helium-filled balloon from the LJCDS varsity field. It climbed to approximately 100,000 feet — where atmospheric pressure dropped so low the balloon expanded to 20–30 feet in diameter before bursting — then drifted more than 50 miles east, finally landing on a rugged mountainside near Julian, CA. Dan Lenzen and Matthew DuBois '26 hiked through dense brush to recover the payload.</div>
+      <div class="proj-desc" style="margin-top: 0.8rem;">The payload — a lunchbox full of cameras, sensors, and experiments — was built by Upper School students <strong>Anthony Casey '28</strong>, <strong>AJ Hamson '28</strong>, and <strong>Matthew DuBois '26</strong> in the Innovation Lab. They used Arduino microcontrollers, 3D printing, and sensor integration to build instruments measuring acceleration, altitude, and temperature, built to the exact specifications the third graders requested. On recovery, the data flowed back into the third-grade science curriculum — connecting the balloon flight directly to their study of atmospheric layers, gas behavior, and weather cycles. The project was guided by <strong>Blue Dot Education</strong>, which has supported over 30 student-led high-altitude balloon launches nationwide, providing real-time GPS tracking throughout the flight.</div>
+      <div class="proj-tags">
+        <span class="proj-tag-pill">Arduino</span>
+        <span class="proj-tag-pill">3D Printing</span>
+        <span class="proj-tag-pill">GPS Tracking</span>
+        <span class="proj-tag-pill">Sensor Design</span>
+        <span class="proj-tag-pill">Cross-Grade Mentorship</span>
+        <span class="proj-tag-pill">Blue Dot Education</span>
+      </div>
+      <div class="proj-highlight">The project is a model for the new HUB for Human Impact — a space where students from every division collaborate on real-world challenges. Third graders drove the vision; high schoolers built the hardware; the stratosphere was the classroom.</div>
+    </div>
+
+    <!-- Hydrone -->
+    <div class="proj-card wide reveal">
+      <img src="https://images.squarespace-cdn.com/content/v1/59c56fb329f1873a74ea2e86/1506652510827-XZ681ULMV42QWKHQBTTC/0+-+hydrone_nbc_square.png?format=1500w" alt="Hydrone prototype — drone-based hydration delivery system" class="proj-img">
+      <div class="proj-tag"><span>2015–16</span> Industry Partnership</div>
+      <div class="proj-title">Hydrone</div>
+      <div class="proj-subtitle">CamelBak × LJCDS Design &amp; Innovation</div>
+      <div class="proj-desc">Working with CamelBak's Lead Industrial Designer on the brief "Hydration in Team Sports," a team of three seniors conducted ethnographic research with athletes across multiple sports — observing in context, interviewing coaches, and identifying non-obvious patterns. They developed the Hydrone: a sideline hydration system designed around the actual timing and social dynamics of team competition. The team traveled to CamelBak's HQ in Petaluma, CA to present their work. Their project was featured on NBC7 News and covered by SportTechie and Vocativ.</div>
+      <div class="proj-tags">
+        <span class="proj-tag-pill">Ethnographic Research</span>
+        <span class="proj-tag-pill">Prototyping</span>
+        <span class="proj-tag-pill">Industrial Design</span>
+        <span class="proj-tag-pill">NBC7 Featured</span>
+      </div>
+      <div class="proj-highlight">Featured on NBC7 News, SportTechie, and Vocativ.</div>
+    </div>
+
+    <!-- Meraki Skate -->
+    <div class="proj-card narrow reveal reveal-delay-1">
+      <img src="https://images.squarespace-cdn.com/content/v1/59c56fb329f1873a74ea2e86/1518029806719-IB4CWVA7XGQ3RRPPXJTO/meraki_puck_packaging.png" alt="Meraki Skate puck packaging" class="proj-img-tall">
+      <div class="proj-tag"><span>2016</span> Student Venture</div>
+      <div class="proj-title">Meraki Skate</div>
+      <div class="proj-subtitle">Student-Founded LLC</div>
+      <div class="proj-desc">Students Dan Schott and Rostam Reifschneider founded Meraki Skate, LLC to solve a real problem: bringing a skate tool to sessions. Their slide pucks integrate a kingpin tool directly into the puck design. They 3D printed and tested multiple iterations with professional and amateur longboarders, incorporated the company, filed a provisional patent with the USPTO, secured VC funding from the Torrey Explorers' Fund, and sourced manufacturing in China and locally in San Diego.</div>
+      <div class="proj-tags">
+        <span class="proj-tag-pill">Patent Filed</span>
+        <span class="proj-tag-pill">VC Funded</span>
+        <span class="proj-tag-pill">3D Prototyping</span>
+      </div>
+      <div class="proj-highlight">Our first manufactured product.</div>
+    </div>
+
+    <!-- Int'l Housewares -->
+    <div class="proj-card half reveal">
+      <img src="https://images.squarespace-cdn.com/content/v1/59c56fb329f1873a74ea2e86/1567104912665-X2BJ481Q104MMAV6K4R1/IHA_students_booth.jpg" alt="LJCDS students at their booth at the International Home and Housewares Show, Chicago" class="proj-img">
+      <div class="proj-tag"><span>2019</span> Industry Exhibition</div>
+      <div class="proj-title">Int'l Housewares Show</div>
+      <div class="proj-subtitle">Chicago, McCormick Place</div>
+      <div class="proj-desc">LJCDS students designed, developed, and exhibited original consumer products at the International Home + Housewares Show in Chicago — a trade event attended by over 60,000 people from 2,200+ exhibitors. Student-invented products included Collapsicatch (collapsible splatter shield), Steam Shield (intelligent pot cover), Blend (camera concealment design), and BrewStop (magnetic pour-over stopper). Students pitched to industry executives — and some received licensing discussions. Featured on WGN-TV News.</div>
+      <div class="proj-tags">
+        <span class="proj-tag-pill">Product Design</span>
+        <span class="proj-tag-pill">Trade Show</span>
+        <span class="proj-tag-pill">WGN-TV</span>
+      </div>
+    </div>
+
+    <!-- LJI -->
+    <div class="proj-card half reveal reveal-delay-1">
+      <img src="https://images.squarespace-cdn.com/content/v1/59c56fb329f1873a74ea2e86/1545085913124-K3Q71VB34FC0E1A9WSTD/LJI_eval_PD.jpg" alt="Scientists from La Jolla Institute evaluating student-designed lab tool prototypes" class="proj-img">
+      <div class="proj-tag"><span>2018–19</span> Research Partnership</div>
+      <div class="proj-title">La Jolla Institute for Immunology</div>
+      <div class="proj-subtitle">Lab Tools for Scientists</div>
+      <div class="proj-desc">Dan guided Middle School students to collaborate with researchers at the La Jolla Institute for Immunology, a world-renowned biomedical research institution. The students designed and built laboratory tools and equipment that LJI's working scientists now use in their research. This is real-world impact: not simulated projects, but tools deployed in a professional lab environment.</div>
+      <div class="proj-tags">
+        <span class="proj-tag-pill">Lab Equipment</span>
+        <span class="proj-tag-pill">Research Collaboration</span>
+        <span class="proj-tag-pill">Middle School</span>
+      </div>
+    </div>
+
+
+  </div>
+</section>
+
+<!-- HUB FOR HUMAN IMPACT -->
+<section id="hub" style="background: var(--ink); color: var(--paper); padding: 0; overflow: hidden;">
+
+  <!-- Hero image -->
+  <div style="position: relative; height: 520px; overflow: hidden;">
+    <img src="https://images.squarespace-cdn.com/content/v1/68bb24ef5f3a792374876785/1757095152293-4H67KQ182GO9WWPR8LZ4/LJCDS_Courtyard+02+%28Night%29.jpg"
+         alt="The Hub for Human Impact — LJCDS campus rendering at night"
+         style="width:100%; height:100%; object-fit:cover; display:block; filter:brightness(0.55) saturate(0.85);">
+    <div style="position:absolute; inset:0; display:flex; flex-direction:column; justify-content:flex-end; padding: 4rem 3rem;">
+      <div style="font-family: 'DM Mono', monospace; font-size: 0.7rem; letter-spacing: 0.22em; text-transform: uppercase; color: var(--accent); margin-bottom: 1rem; display:flex; align-items:center; gap:0.8rem;">
+        <span style="display:inline-block; width:2rem; height:1px; background:var(--accent);"></span>
+        Capital Campaign · Opening Fall 2026
+      </div>
+      <h2 style="font-family: 'Playfair Display', serif; font-size: clamp(2.8rem, 5.5vw, 5.5rem); font-weight: 900; line-height: 0.95; letter-spacing: -0.02em; color: var(--paper); margin: 0;">
+        The Hub for<br><em style="color: var(--accent);">Human Impact</em>
+      </h2>
+      <p style="font-size: 1rem; color: rgba(245,240,232,0.6); margin-top: 1rem; max-width: 55ch; line-height: 1.7;">
+        A 3-story, 20,000 sq ft addition at the heart of LJCDS campus — and the most visible testament to what a decade of Design &amp; Innovation work made possible.
+      </p>
+    </div>
+  </div>
+
+  <!-- Main content -->
+  <div style="padding: 6rem 3rem;">
+
+    <!-- Intro grid -->
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 6rem; align-items: start; margin-bottom: 5rem;">
+      <div class="reveal">
+        <div style="font-family: 'DM Mono', monospace; font-size: 0.68rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--accent); margin-bottom: 1.5rem; display:flex; align-items:center; gap:0.8rem;">
+          <span style="display:inline-block; width:2rem; height:1px; background:var(--accent);"></span>Dan's Role
+        </div>
+        <h3 style="font-family: 'Playfair Display', serif; font-size: 2rem; font-weight: 700; line-height: 1.1; color: var(--paper); margin-bottom: 1.5rem;">A program that proved its value — and the community responded.</h3>
+        <p style="font-size: 1rem; color: rgba(245,240,232,0.72); line-height: 1.85; margin-bottom: 1.2rem;">
+          The Hub for Human Impact is not just a building — it is a community's financial declaration that Design &amp; Innovation belongs at the center of LJCDS. Dan played a vital role in the fundraising effort behind the campaign, helping build the case that a decade of real-world student work, industry partnerships, and measurable outcomes had earned this investment.
+        </p>
+        <p style="font-size: 1rem; color: rgba(245,240,232,0.72); line-height: 1.85; margin-bottom: 1.2rem;">
+          The Hub is anchored by <strong style="color: var(--paper);">two dedicated Design &amp; Innovation centers</strong> — one for Middle and Upper School, one for Lower School — a direct reflection of the K–12 curriculum Dan built from the ground up. When donors chose what to fund, they chose design and innovation first.
+        </p>
+        <p style="font-size: 1rem; color: rgba(245,240,232,0.72); line-height: 1.85;">
+          The campaign succeeded because the program's impact was undeniable: students who went to MIT, UVA, and Northwestern. Products that shipped. Companies that launched. Lab tools that scientists actually use. That track record — built project by project over ten years — is what moved the community to open their wallets.
+        </p>
+      </div>
+      <div class="reveal reveal-delay-2">
+        <img src="https://images.squarespace-cdn.com/content/v1/68bb24ef5f3a792374876785/1757095152066-SUHMUHM26WDAPR0WPM3B/LJCDS_Bridge.jpg"
+             alt="The Bridge — standout architectural feature of The Hub"
+             style="width:100%; aspect-ratio:4/3; object-fit:cover; display:block; margin-bottom: 1.5rem; filter:saturate(0.9);">
+        <div style="padding: 1.5rem; border: 1px solid rgba(255,255,255,0.1);">
+          <div style="font-family: 'DM Mono', monospace; font-size: 0.65rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--accent); margin-bottom: 0.5rem;">The Bridge</div>
+          <div style="font-size: 0.85rem; color: rgba(245,240,232,0.55); line-height: 1.65;">The standout architectural feature of The Hub — a multi-use bridge designed for flexibility, imagination, and community. Connecting divisions. Connecting disciplines. Built because the program earned it.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Spaces strip -->
+    <div class="reveal" style="margin-bottom: 5rem;">
+      <div style="font-family: 'DM Mono', monospace; font-size: 0.68rem; letter-spacing: 0.2em; text-transform: uppercase; color: rgba(245,240,232,0.35); margin-bottom: 1.5rem;">What's inside</div>
+      <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 3px;">
+        <div style="position:relative; overflow:hidden;">
+          <img src="https://images.squarespace-cdn.com/content/v1/68bb24ef5f3a792374876785/1757095152075-ALBGSNKNOBPS5VNXE8AA/LJCDS_D%26I+2.jpg"
+               alt="Design and Innovation space in The Hub"
+               style="width:100%; aspect-ratio:3/2; object-fit:cover; display:block; filter:brightness(0.6) saturate(0.85); transition: filter 0.3s;"
+               onmouseover="this.style.filter='brightness(0.8) saturate(1)'" onmouseout="this.style.filter='brightness(0.6) saturate(0.85)'">
+          <div style="position:absolute; bottom:0; left:0; right:0; padding: 1.2rem; background: linear-gradient(transparent, rgba(0,0,0,0.7));">
+            <div style="font-family:'DM Mono',monospace; font-size:0.62rem; letter-spacing:0.12em; text-transform:uppercase; color:var(--accent); margin-bottom:0.2rem;">Flagship Space</div>
+            <div style="font-family:'Playfair Display',serif; font-size:0.95rem; font-weight:700; color:var(--paper);">Design &amp; Innovation</div>
+          </div>
+        </div>
+        <div style="position:relative; overflow:hidden;">
+          <img src="https://images.squarespace-cdn.com/content/v1/68bb24ef5f3a792374876785/1757095152079-LVSXN1DD4SVS7J15XSPG/LJCDS_Upper+Level+Collab+%28Zoomed+Out%29.jpg"
+               alt="Collaboration spaces on the second floor of The Hub"
+               style="width:100%; aspect-ratio:3/2; object-fit:cover; display:block; filter:brightness(0.6) saturate(0.85); transition: filter 0.3s;"
+               onmouseover="this.style.filter='brightness(0.8) saturate(1)'" onmouseout="this.style.filter='brightness(0.6) saturate(0.85)'">
+          <div style="position:absolute; bottom:0; left:0; right:0; padding: 1.2rem; background: linear-gradient(transparent, rgba(0,0,0,0.7));">
+            <div style="font-family:'DM Mono',monospace; font-size:0.62rem; letter-spacing:0.12em; text-transform:uppercase; color:var(--accent); margin-bottom:0.2rem;">2nd Floor</div>
+            <div style="font-family:'Playfair Display',serif; font-size:0.95rem; font-weight:700; color:var(--paper);">Collaboration Spaces</div>
+          </div>
+        </div>
+        <div style="position:relative; overflow:hidden;">
+          <img src="https://images.squarespace-cdn.com/content/v1/68bb24ef5f3a792374876785/1757095152087-2KPB8O3ZAIY06ZK199OC/LJCDS_Lower+D%26I.jpg"
+               alt="Lower School Design and Innovation room"
+               style="width:100%; aspect-ratio:3/2; object-fit:cover; display:block; filter:brightness(0.6) saturate(0.85); transition: filter 0.3s;"
+               onmouseover="this.style.filter='brightness(0.8) saturate(1)'" onmouseout="this.style.filter='brightness(0.6) saturate(0.85)'">
+          <div style="position:absolute; bottom:0; left:0; right:0; padding: 1.2rem; background: linear-gradient(transparent, rgba(0,0,0,0.7));">
+            <div style="font-family:'DM Mono',monospace; font-size:0.62rem; letter-spacing:0.12em; text-transform:uppercase; color:var(--accent); margin-bottom:0.2rem;">Lower School</div>
+            <div style="font-family:'Playfair Display',serif; font-size:0.95rem; font-weight:700; color:var(--paper);">D&amp;I for Every Age</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Alumni proof -->
+    <div style="margin-bottom: 5rem;">
+      <div style="font-family: 'DM Mono', monospace; font-size: 0.68rem; letter-spacing: 0.2em; text-transform: uppercase; color: rgba(245,240,232,0.35); margin-bottom: 2rem; display:flex; align-items:center; gap:0.8rem;">
+        <span style="display:inline-block; width:2rem; height:1px; background:rgba(255,255,255,0.2);"></span>Why the community invested
+      </div>
+      <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 0; border: 1px solid rgba(255,255,255,0.1);">
+        <div class="reveal" style="padding: 2.5rem; border-right: 1px solid rgba(255,255,255,0.1);">
+          <div style="font-family:'Playfair Display',serif; font-style:italic; font-size:1rem; color:rgba(245,240,232,0.8); line-height:1.7; margin-bottom:1.2rem;">"The entrepreneurial mindset I developed at Country Day was new to most of my peers at MIT because their high schools did not have a similar curriculum. Because of LJCDS, I thrived at MIT."</div>
+          <div style="font-family:'DM Mono',monospace; font-size:0.65rem; letter-spacing:0.1em; text-transform:uppercase; color:var(--accent);">Rostam Reifschneider '17</div>
+          <div style="font-size:0.75rem; color:rgba(245,240,232,0.35); margin-top:0.2rem;">MIT '21 · Cofounder &amp; CTO, Hydrova · Meraki Skate founder</div>
+        </div>
+        <div class="reveal reveal-delay-1" style="padding: 2.5rem; border-right: 1px solid rgba(255,255,255,0.1);">
+          <div style="font-family:'Playfair Display',serif; font-style:italic; font-size:1rem; color:rgba(245,240,232,0.8); line-height:1.7; margin-bottom:1.2rem;">"The collaboration between Design and Innovation and Citizenship gave me confidence in my competence. I created my own major studying the intersection of subjects at University of Virginia."</div>
+          <div style="font-family:'DM Mono',monospace; font-size:0.65rem; letter-spacing:0.1em; text-transform:uppercase; color:var(--accent);">Sydney Strawn '20</div>
+          <div style="font-size:0.75rem; color:rgba(245,240,232,0.35); margin-top:0.2rem;">UVA '24 · D4SD Honorable Mention · Housewares Show inventor</div>
+        </div>
+        <div class="reveal reveal-delay-2" style="padding: 2.5rem;">
+          <div style="font-family:'Playfair Display',serif; font-style:italic; font-size:1rem; color:rgba(245,240,232,0.8); line-height:1.7; margin-bottom:1.2rem;">"The Innovation Lab created an opportunity for me to achieve out-of-reach goals that built the foundation of my college applications and career. I learned more useful skills there than in any A.P. class."</div>
+          <div style="font-family:'DM Mono',monospace; font-size:0.65rem; letter-spacing:0.1em; text-transform:uppercase; color:var(--accent);">LJCDS Innovation Alum</div>
+          <div style="font-size:0.75rem; color:rgba(245,240,232,0.35); margin-top:0.2rem;">innovation-education.com/alumni</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Stats + CTA -->
+    <div class="reveal" style="display: grid; grid-template-columns: 1fr 1fr; gap: 0; border: 1px solid rgba(255,255,255,0.1);">
+      <div style="padding: 3rem; border-right: 1px solid rgba(255,255,255,0.1);">
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0;">
+          <div style="padding: 1.8rem 2rem 1.8rem 0; border-right: 1px solid rgba(255,255,255,0.1); border-bottom: 1px solid rgba(255,255,255,0.1);">
+            <div style="font-family:'Playfair Display',serif; font-size:2.8rem; font-weight:900; color:var(--paper); line-height:1;">20K</div>
+            <div style="font-size:0.7rem; letter-spacing:0.1em; text-transform:uppercase; color:rgba(245,240,232,0.35); margin-top:0.3rem;">sq ft of new space</div>
+          </div>
+          <div style="padding: 1.8rem 0 1.8rem 2rem; border-bottom: 1px solid rgba(255,255,255,0.1);">
+            <div style="font-family:'Playfair Display',serif; font-size:2.8rem; font-weight:900; color:var(--paper); line-height:1;">3</div>
+            <div style="font-size:0.7rem; letter-spacing:0.1em; text-transform:uppercase; color:rgba(245,240,232,0.35); margin-top:0.3rem;">stories · opening 2026</div>
+          </div>
+          <div style="padding: 1.8rem 2rem 0 0; border-right: 1px solid rgba(255,255,255,0.1);">
+            <div style="font-family:'Playfair Display',serif; font-size:2.8rem; font-weight:900; color:var(--accent); line-height:1;">2</div>
+            <div style="font-size:0.7rem; letter-spacing:0.1em; text-transform:uppercase; color:rgba(245,240,232,0.35); margin-top:0.3rem;">dedicated D&amp;I centers</div>
+          </div>
+          <div style="padding: 1.8rem 0 0 2rem;">
+            <div style="font-family:'Playfair Display',serif; font-size:2.8rem; font-weight:900; color:var(--paper); line-height:1;">6</div>
+            <div style="font-size:0.7rem; letter-spacing:0.1em; text-transform:uppercase; color:rgba(245,240,232,0.35); margin-top:0.3rem;">programs housed inside</div>
+          </div>
+        </div>
+      </div>
+      <div style="padding: 3rem; display:flex; flex-direction:column; justify-content:space-between;">
+        <div>
+          <div style="font-family:'DM Mono',monospace; font-size:0.65rem; letter-spacing:0.15em; text-transform:uppercase; color:var(--accent); margin-bottom:1rem;">Centennial Campaign</div>
+          <div style="font-family:'Playfair Display',serif; font-size:1.4rem; font-weight:700; color:var(--paper); line-height:1.2; margin-bottom:1rem;">The future starts here — and Design &amp; Innovation is at its center.</div>
+          <p style="font-size:0.85rem; color:rgba(245,240,232,0.55); line-height:1.75;">The Hub cements what ten years of student work already proved: that human-centered design is not an elective. It is essential. The community agreed — and invested in a building to prove it.</p>
+        </div>
+        <a href="https://www.100.ljcds.org/hub" target="_blank" style="display:inline-flex; align-items:center; gap:0.6rem; padding:0.9rem 2rem; font-family:'DM Mono',monospace; font-size:0.75rem; letter-spacing:0.1em; text-transform:uppercase; text-decoration:none; background:var(--accent); color:var(--white); margin-top:2rem; transition:background 0.2s; width:fit-content;" onmouseover="this.style.background='#a33a15'" onmouseout="this.style.background='var(--accent)'">
+          Explore The Hub →
+        </a>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- COURSES -->
+<section id="courses">
+  <div class="section-header">
+    <span class="section-label">Curriculum</span>
+    <h2>Courses <em>created</em> &amp; taught.</h2>
+  </div>
+  <div class="courses-list">
+    <div class="course-item reveal">
+      <div class="course-level">Upper School · Honors / Advanced</div>
+      <div class="course-name">Design Thinking to Open Entrepreneurship</div>
+      <div class="course-desc">Trains students in human-centered design — ethnography, problem identification, ideation, evaluation, and user testing — then transitions into implementation as a sustainable enterprise. Culminates in a business plan, provisional patent filing, and a pitch to the Torrey Explorers' Fund. Industry partners include CamelBak and Ottobock.</div>
+    </div>
+    <div class="course-item reveal reveal-delay-1">
+      <div class="course-level">Upper School · Honors</div>
+      <div class="course-name">Innovation Technology Studio</div>
+      <div class="course-desc">Leverages the full tool set of the Innovation Lab — sketching, laser cutting, 2D/3D modeling, and sensors — culminating in a substantial long-term build project installed in the real world.</div>
+    </div>
+    <div class="course-item reveal">
+      <div class="course-level">Upper School</div>
+      <div class="course-name">Art &amp; Tech: Interactive Design</div>
+      <div class="course-desc">Explores the creative side of coding: drawings, animations, games, websites, and virtual worlds. Students combine programming with design imagination across hardware and software tools.</div>
+    </div>
+    <div class="course-item reveal reveal-delay-1">
+      <div class="course-level">Middle School</div>
+      <div class="course-name">Interaction Design</div>
+      <div class="course-desc">Introduces students to the fundamentals of designing for human interaction — digital and physical — with projects that build iterative prototyping and feedback skills.</div>
+    </div>
+    <div class="course-item reveal">
+      <div class="course-level">Middle School</div>
+      <div class="course-name">Human-Computer Interaction</div>
+      <div class="course-desc">Covers principles of HCI with a focus on developing effective mobile apps. Students learn to design and program with an eye toward usability, feedback, and user experience.</div>
+    </div>
+    <div class="course-item reveal reveal-delay-1">
+      <div class="course-level">Middle School · Intro</div>
+      <div class="course-name">Innovation Lab Foundations</div>
+      <div class="course-desc">Introduces the lab's tools through precision projects: vector design, laser etching, and iterative 3D work using the student-built 110W CO₂ laser cutter.</div>
+    </div>
+  </div>
+</section>
+
+<!-- RESEARCH -->
+<section class="research" id="research">
+  <div class="section-header">
+    <span class="section-label">Research</span>
+    <h2>Publications &amp; <em>conference work</em>.</h2>
+  </div>
+  <div class="pubs-list">
+    <div class="pub-item reveal">
+      <span class="pub-year">2016</span>
+      <div>
+        <div class="pub-title">Measuring Conventionalization in the Manual Modality — Namboodiripad, S., Lenzen, D., Lepic, R., &amp; Verhoef, T.</div>
+        <div class="pub-venue">Journal of Language Evolution</div>
+      </div>
+    </div>
+    <div class="pub-item reveal">
+      <span class="pub-year">2016</span>
+      <div>
+        <div class="pub-title">Hands that Speak: An Integrated Approach to Studying Complex Human Communicative Body Movements — Weibel, N., Hwang, S.-O., Rick, S., Sayyari, E., Lenzen, D., &amp; Hollan, J.</div>
+        <div class="pub-venue">HICSS-49, Hawaii International Conference on System Sciences</div>
+      </div>
+    </div>
+    <div class="pub-item reveal">
+      <span class="pub-year">2015</span>
+      <div>
+        <div class="pub-title">Measuring Time Gestures with the Microsoft Kinect — Lenzen, D.</div>
+        <div class="pub-venue">Proceedings of the Cognitive Science Society Annual Conference</div>
+      </div>
+    </div>
+    <div class="pub-item reveal">
+      <span class="pub-year">2016</span>
+      <div>
+        <div class="pub-title">ASL Learners' Gesture About Time: Measuring Movement with the Microsoft Kinect — Lenzen, D.</div>
+        <div class="pub-venue">Presentation — Theoretical Issues in Sign Language Research Conference, Melbourne, Australia</div>
+      </div>
+    </div>
+    <div class="pub-item reveal">
+      <span class="pub-year">2012</span>
+      <div>
+        <div class="pub-title">The Gestures ASL Signers Use Tell Us When They Are Ready to Learn Math — Goldin-Meadow, S., Shield, A., Lenzen, D., Herzig, M., &amp; Padden, C.</div>
+        <div class="pub-venue">Cognition, 123, 448–453</div>
+      </div>
+    </div>
+    <div class="pub-item reveal">
+      <span class="pub-year">2015</span>
+      <div>
+        <div class="pub-title">UCSD Chancellor's Interdisciplinary Collaboratories Award</div>
+        <div class="pub-venue">"American Sign Language with Depth Data Representation and Recognition" — $15,000 grant, 2014–2015</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- RECOGNITION -->
+<section id="recognition">
+  <div class="section-header">
+    <span class="section-label">Recognition</span>
+    <h2>Awards &amp; <em>press</em>.</h2>
+  </div>
+  <div class="recognition-grid">
+    <div class="award-card reveal">
+      <div class="award-icon">🏆</div>
+      <div class="award-title">Smithsonian / Cooper Hewitt National Design Competition</div>
+      <div class="award-desc">Student Rostam Reifschneider ('17) was a Finalist — flown to Boston for networking and to New York City to pitch to judges. Students have earned National Honorable Mentions (Top 15) in 2018 and 2021.</div>
+    </div>
+    <div class="award-card reveal reveal-delay-1">
+      <div class="award-icon">📺</div>
+      <div class="award-title">WGN-TV News — Chicago</div>
+      <div class="award-desc">LJCDS students and their products were featured in WGN-TV news segments covering the International Home + Housewares Show at McCormick Place.</div>
+    </div>
+    <div class="award-card reveal reveal-delay-2">
+      <div class="award-icon">🎙</div>
+      <div class="award-title">NBC7 News &amp; SportTechie</div>
+      <div class="award-desc">The Hydrone project received national media coverage across NBC7, SportTechie, and Vocativ — highlighting student-led product development from a high school design class.</div>
+    </div>
+    <div class="award-card reveal">
+      <div class="award-icon">🏙</div>
+      <div class="award-title">D4SD Competition Finalist</div>
+      <div class="award-desc">The LJCDS Design &amp; Innovation team's beach accessibility project was named a Finalist in the Design For San Diego (D4SD) citywide competition.</div>
+    </div>
+    <div class="award-card reveal reveal-delay-1">
+      <div class="award-icon">🎤</div>
+      <div class="award-title">Conference Speaker</div>
+      <div class="award-desc">Dan presents at local and national conferences, consulting with schools and sharing the program's model for K–12 design education — including from its earliest days to a nationally recognized institution.</div>
+    </div>
+    <div class="award-card reveal reveal-delay-2">
+      <div class="award-icon">🔬</div>
+      <div class="award-title">UCSD Chancellor's Award</div>
+      <div class="award-desc">Recipient of the UCSD Chancellor's Interdisciplinary Collaboratories Award ($15,000) for the project "American Sign Language with Depth Data Representation and Recognition."</div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section class="contact" id="contact">
+  <h2>Let's <em>build</em> something.</h2>
+  <p class="contact-desc">Interested in partnering with the LJCDS Design &amp; Innovation program, consulting on your own school's innovation curriculum, or just getting in touch?</p>
+  <div class="contact-links">
+    <a href="https://www.innovation-education.com" target="_blank" class="contact-link primary">innovation-education.com</a>
+    <a href="https://www.ljcds.org" target="_blank" class="contact-link secondary">LJCDS.org</a>
+    <a href="https://www.linkedin.com/in/daniel-lenzen-293b6732/" target="_blank" class="contact-link secondary">LinkedIn</a>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <span>Dan Lenzen — Director, Design &amp; Innovation @ LJCDS · San Diego, CA</span>
+  <span>Built with research from innovation-education.com &amp; ljcds.org</span>
+</footer>
+
+<script>
+  // Scroll reveal
+  const reveals = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+      }
+    });
+  }, { threshold: 0.1 });
+  reveals.forEach(el => observer.observe(el));
+
+  // Hero entrance
+  document.querySelectorAll('.hero .hero-left > *').forEach((el, i) => {
+    el.style.opacity = '0';
+    el.style.transform = 'translateY(20px)';
+    el.style.transition = `opacity 0.7s ease ${i * 0.15 + 0.2}s, transform 0.7s ease ${i * 0.15 + 0.2}s`;
+    setTimeout(() => {
+      el.style.opacity = '1';
+      el.style.transform = 'translateY(0)';
+    }, 100);
+  });
+</script>
+</body>
+</html>
